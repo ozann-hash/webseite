@@ -1,0 +1,209 @@
+<h1>Hallo Sedef, <br> </h1>
+
+Dies ist mein erster test um zu Coden <br>
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animierte Herz-Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f0f0f0;
+            overflow: hidden; /* Verhindert das Scrollen */
+        }
+
+        #herzContainer {
+            position: absolute;
+        }
+
+        .herz {
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bitte bewerte die Webseite</h1>
+
+    <div id="herzContainer"></div>
+
+    <script>
+        const herzContainer = document.getElementById('herzContainer');
+
+        function erstelleHerz() {
+            const herz = document.createElement('div');
+            herz.className = 'herz';
+            herz.innerHTML = '❤️'; // Herzsymbol
+
+            const zufallsPositionX = Math.random() * window.innerWidth;
+            const zufallsPositionY = Math.random() * window.innerHeight;
+
+            herz.style.left = `${zufallsPositionX}px`;
+            herz.style.top = `${zufallsPositionY}px`;
+
+            herzContainer.appendChild(herz);
+
+            bewegeHerz(herz);
+        }
+
+        function bewegeHerz(herz) {
+            const zufallsRichtungX = (Math.random() - 0.5) * 2; // Zufällige Richtung (links oder rechts)
+            const zufallsRichtungY = (Math.random() - 0.5) * 2; // Zufällige Richtung (oben oder unten)
+
+            function aktualisierePosition() {
+                const aktuellePositionX = parseFloat(herz.style.left);
+                const aktuellePositionY = parseFloat(herz.style.top);
+
+                const neuePositionX = aktuellePositionX + zufallsRichtungX;
+                const neuePositionY = aktuellePositionY + zufallsRichtungY;
+
+                herz.style.left = `${neuePositionX}px`;
+                herz.style.top = `${neuePositionY}px`;
+
+                requestAnimationFrame(aktualisierePosition);
+            }
+
+            aktualisierePosition();
+        }
+
+        // Erstelle Herzen alle 500 Millisekunden
+        setInterval(erstelleHerz, 500);
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Interaktive Sternenanimation</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: türkis }
+        .star {
+            position: absolute;
+            width: 5px; height: 5px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 0; i < 100; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * window.innerWidth + 'px';
+                star.style.top = Math.random() * window.innerHeight + 'px';
+
+                star.addEventListener('mouseover', function() {
+                    star.style.backgroundColor = 'yellow';
+                });
+
+                star.addEventListener('mouseout', function() {
+                    star.style.backgroundColor = 'white';
+                });
+
+                document.body.appendChild(star);
+            }
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Webseiten-Bewertung</title>
+    <style>
+        .star-rating {
+            direction: rtl; /* Umkehren der Richtung für die Sterne */
+            font-size: 30px;
+            unicode-bidi: bidi-override;
+            display: inline-block;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            color: #ccc; /* Farbe der nicht ausgewählten Sterne */
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold; /* Farbe der ausgewählten Sterne */
+        }
+    </style>
+</head>
+<body>
+    <div class="star-rating">
+        <input type="radio" id="5-stars" name="rating" value="5" /><label for="5-stars">&#9733;</label>
+        <input type="radio" id="4-stars" name="rating" value="4" /><label for="4-stars">&#9733;</label>
+        <input type="radio" id="3-stars" name="rating" value="3" /><label for="3-stars">&#9733;</label>
+        <input type="radio" id="2-stars" name="rating" value="2" /><label for="2-stars">&#9733;</label>
+        <input type="radio" id="1-star" name="rating" value="1" /><label for="1-star">&#9733;</label>
+    </div>
+
+    <script>
+        document.querySelectorAll('.star-rating input').forEach(input => {
+            input.addEventListener('change', function() {
+                alert('Sie haben ' + this.value + ' Sterne vergeben!');
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Fang das Objekt Spiel - Einfacher Modus</title>
+    <style>
+        #spielbereich {
+            width: 100vw; height: 100vh;
+            position: relative;
+            background-color: lightgrey;
+        }
+        #objekt {
+            width: 50px; height: 50px;
+            position: absolute;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: top 0.5s ease, left 0.5s ease; /* Sanftere Bewegung */
+        }
+    </style>
+</head>
+<body>
+    <div id="spielbereich">
+        <div id="objekt"></div>
+    </div>
+
+    <script>
+        const objekt = document.getElementById('objekt');
+        let timeout;
+
+        spielbereich.addEventListener('mouseover', function(e) {
+            clearTimeout(timeout); // Vorherigen Timeout abbrechen
+            timeout = setTimeout(() => {
+                objekt.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+                objekt.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+            }, 500); // Verzögerung vor dem Bewegen
+        });
+
+        objekt.addEventListener('click', function() {
+            alert('Gefangen!');
+            objekt.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
